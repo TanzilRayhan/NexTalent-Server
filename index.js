@@ -60,13 +60,13 @@ async function run() {
       const updatedJobs = req.body;
       const jobs = {
         $set: {
-          // name: updatedProducts.name,
-          // brandName: updatedProducts.brandName,
-          // type: updatedProducts.type,
-          // price: updatedProducts.price,
-          // rating: updatedProducts.rating,
-          // image: updatedProducts.image,
-          // description: updatedProducts.description
+          email: updatedJobs.email,
+          jobTitle: updatedJobs.jobTitle, 
+          category: updatedJobs.category, 
+          deadline: updatedJobs.deadline, 
+          minPrice: updatedJobs.minPrice, 
+          maxPrice: updatedJobs.maxPrice, 
+          description: updatedJobs.description
         }
       }
       const result = await jobCollection.updateOne(filter, jobs, options);
