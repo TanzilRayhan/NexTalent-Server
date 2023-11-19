@@ -25,6 +25,7 @@ async function run() {
   try {
 
     const jobCollection = client.db("jobDB").collection("jobs");
+    const bidCollection = client.db("jobDB").collection("bids");
 
     app.get("/jobs", async (req, res) => {
       const cursor = jobCollection.find();
