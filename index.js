@@ -27,6 +27,7 @@ async function run() {
     const jobCollection = client.db("jobDB").collection("jobs");
     const bidCollection = client.db("jobDB").collection("bids");
 
+    //jobs
     app.get("/jobs", async (req, res) => {
       const cursor = jobCollection.find();
       const result = await cursor.toArray();
@@ -74,7 +75,16 @@ async function run() {
       res.send(result);
     })
 
+    //bids
+    app.post("/bids", async (req, res) => {
+      const bid = req.body;
+      const result = await bidCollection.insertOne(bid);
+      console.log(result);
+      res.send(result);
+    });
 
+
+    //send ping
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
