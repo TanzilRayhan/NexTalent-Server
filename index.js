@@ -93,6 +93,12 @@ async function run() {
       console.log(result);
       res.send(result);
     });
+    app.delete("/bids/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await bidCollection.deleteOne(query);
+      res.send(result);
+    })
 
     //send ping
     await client.db("admin").command({ ping: 1 });
