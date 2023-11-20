@@ -77,6 +77,13 @@ async function run() {
     })
 
     //bids
+    app.get("/bids", async (req, res) => {
+      const cursor = bidCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+
     app.post("/bids", async (req, res) => {
       const bid = req.body;
       const result = await bidCollection.insertOne(bid);
