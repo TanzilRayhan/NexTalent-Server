@@ -78,12 +78,15 @@ async function run() {
 
     //bids
     app.get("/bids", async (req, res) => {
-      const cursor = bidCollection.find();
+      console.log(req.query.email);
+      let query = {};
+      if(req.query?.email){
+        query = { email: req.query.email }
+      }
+      const cursor = bidCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
     })
-
-
     app.post("/bids", async (req, res) => {
       const bid = req.body;
       const result = await bidCollection.insertOne(bid);
