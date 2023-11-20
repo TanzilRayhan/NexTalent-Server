@@ -71,6 +71,7 @@ async function run() {
           description: updatedJobs.description
         }
       }
+
       const result = await jobCollection.updateOne(filter, jobs, options);
       res.send(result);
     })
@@ -82,7 +83,6 @@ async function run() {
       console.log(result);
       res.send(result);
     });
-
 
     //send ping
     await client.db("admin").command({ ping: 1 });
