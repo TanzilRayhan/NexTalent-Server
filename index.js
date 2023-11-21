@@ -71,10 +71,10 @@ async function run() {
           description: updatedJobs.description
         }
       }
-
       const result = await jobCollection.updateOne(filter, jobs, options);
       res.send(result);
     })
+
 
     //bids
     app.get("/bids", async (req, res) => {
@@ -97,6 +97,19 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
       const result = await bidCollection.deleteOne(query);
+      res.send(result);
+    })
+    app.patch("/bids/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) }
+      const updateBid = req.body;
+      console.log(updateBid);
+      const bids = {
+        $set: {
+          status: updateBid.status
+        }
+      }
+      const result = await bidCollection.updateOne(filter, bids);
       res.send(result);
     })
 
