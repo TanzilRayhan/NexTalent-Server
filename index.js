@@ -5,20 +5,18 @@ const app = express();
 const port = process.env.PORT || 5000;
 require('dotenv').config();
 
-//middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-//mongodb connection
+// MongoDB connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.hlcvkxo.mongodb.net/?retryWrites=true&w=majority`;
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
 });
 
 async function run() {
@@ -63,11 +61,11 @@ async function run() {
       const jobs = {
         $set: {
           email: updatedJobs.email,
-          jobTitle: updatedJobs.jobTitle, 
-          category: updatedJobs.category, 
-          deadline: updatedJobs.deadline, 
-          minPrice: updatedJobs.minPrice, 
-          maxPrice: updatedJobs.maxPrice, 
+          jobTitle: updatedJobs.jobTitle,
+          category: updatedJobs.category,
+          deadline: updatedJobs.deadline,
+          minPrice: updatedJobs.minPrice,
+          maxPrice: updatedJobs.maxPrice,
           description: updatedJobs.description
         }
       }
@@ -80,7 +78,7 @@ async function run() {
     app.get("/bids", async (req, res) => {
       console.log(req.query.email);
       let query = {};
-      if(req.query?.email){
+      if (req.query?.email) {
         query = { email: req.query.email }
       }
       const cursor = bidCollection.find(query);
@@ -123,10 +121,12 @@ async function run() {
 run().catch(console.dir);
 
 
+// Ping route
 app.get('/', (req, res) => {
-  res.send('NexTalent server is running')
-})
+  res.send('NexTalent server is running');
+});
 
+// Start server
 app.listen(port, () => {
   console.log(`NexTalent is running on port: ${port}`);
-})
+});
