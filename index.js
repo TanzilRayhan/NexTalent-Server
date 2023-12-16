@@ -40,10 +40,15 @@ async function run() {
     });
 
     app.get("/jobs/:id", async (req, res) => {
-      const id = req.params.id;
+      try {
+        const id = req.params.id;
       const query = { _id: new ObjectId(id) }
       const result = await jobCollection.findOne(query);
       res.send(result);
+      } catch (error) {
+        return res.send({error: true, message: error.message})
+      }
+      
     })
 
     app.delete("/jobs/:id", async (req, res) => {
